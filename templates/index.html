@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teak Disease Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --primary-light: #4caf50;
+      --secondary: #ff9800;
+      --dark: #1b5e20;
+      --light: #e8f5e9;
+      --white: #ffffff;
+      --gray: #f5f5f5;
+      --text: #333333;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header Styles */
+    .navbar {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+      color: var(--white);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 24px;
+    }
+    
+    .logo img {
+      height: 40px;
+      width: auto;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      margin: 0 5px;
+    }
+    
+    nav a:hover, nav a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1598880940083-2d4b8148532f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') no-repeat center center/cover;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      color: var(--white);
+      padding: 0 20px;
+      animation: fadeIn 1.5s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    
+    /* Upload Section */
+    .upload-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 60px 0;
+    }
+    
+    .card {
+      background: var(--white);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+      transition: height 0.5s ease;
+      z-index: -1;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card:hover::before {
+      height: 100%;
+    }
+    
+    .card:hover h3,
+    .card:hover p {
+      color: var(--white);
+    }
+    
+    .card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: var(--dark);
+      transition: color 0.3s ease;
+    }
+    
+    .card p {
+      color: var(--text);
+      transition: color 0.3s ease;
+      margin-bottom: 20px;
+    }
+    
+    .card input[type="file"] {
+      margin: 15px 0;
+      padding: 10px;
+      border: 2px dashed var(--primary-light);
+      border-radius: 10px;
+      width: 100%;
+      background: var(--light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .card input[type="file"]:hover {
+      border-color: var(--primary);
+      background: rgba(76, 175, 80, 0.1);
+    }
+    
+    .card button {
+      background: var(--secondary);
+      color: var(--white);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+      width: 100%;
+    }
+    
+    .card button:hover {
+      background: #f57c00;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Results Styling */
+    .result-box {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      margin: 40px 0;
+      animation: fadeIn 0.5s ease-in-out;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .result-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+    }
+    
+    .result-box h2 {
+      text-align: center;
+      color: var(--dark);
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 20px;
+    }
+    
+    .result-box ul {
+      margin-left: 20px;
+      display: inline-block;
+      text-align: left;
+    }
+    
+    .result-box img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Flash Message Styles */
+    .flash-message {
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: 500;
+      animation: fadeIn 0.5s ease-in-out;
+      text-align: center;
+    }
+    
+    .flash-success {
+      background: #e6ffe6;
+      border: 1px solid #b2d8b2;
+      color: var(--dark);
+    }
+    
+    .flash-danger {
+      background: #ffe6e6;
+      border: 1px solid #f5c2c7;
+      color: #a94442;
+    }
+    
+    .flash-warning {
+      background: #fff8e6;
+      border: 1px solid #ffe58f;
+      color: #856404;
+    }
+    
+    .error-box {
+      background: #ffe6e6;
+      border: 1px solid #f5c2c7;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      color: #a94442;
+      font-weight: 500;
+      animation: fadeIn 0.5s ease-in-out;
+      text-align: center;
+    }
+    
+    .success-box {
+      background: #e6ffe6;
+      border: 1px solid #b2d8b2;
+      padding: 30px;
+      border-radius: 15px;
+      margin: 20px 0;
+      color: var(--dark);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+      color: var(--white);
+      padding: 50px 0 20px;
+      text-align: center;
+      margin-top: 60px;
+    }
+    
+    footer p {
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+    
+    /* Floating Contact Button */
+    .contact-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 15px 25px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-btn:hover {
+      background: var(--dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Contact Form Popup */
+    .contact-popup {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: var(--white);
+      border-radius: 15px;
+      padding: 25px;
+      width: 350px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      z-index: 1001;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .contact-popup h3 {
+      margin-top: 0;
+      color: var(--dark);
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 20px;
+    }
+    
+    .contact-popup input,
+    .contact-popup textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid var(--gray);
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-popup input:focus,
+    .contact-popup textarea:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+      outline: none;
+    }
+    
+    .contact-popup button {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      width: 100%;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .contact-popup button:hover {
+      background: var(--dark);
+      transform: translateY(-2px);
+    }
+    
+    /* Animation for cards */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card:nth-child(1) { animation: slideIn 0.8s ease; }
+    .card:nth-child(2) { animation: slideIn 1s ease; }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar .container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .upload-section {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-popup {
+        width: 300px;
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <div class="logo">
+      <img src="/static/images/cropai-logo.png" alt="CropAI Logo">
+      Teak Disease Detection
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Teak Tree Disease Detection</h1>
+    <p>Upload your teak leaf image or video to detect diseases instantly</p>
+  </div>
+</section>
+
+<div class="container">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Upload Options -->
+    <div class="upload-section">
+        <div class="card">
+            <h3><i class="fas fa-camera"></i> Upload Leaf Image</h3>
+            <p>Upload a clear image of a teak leaf for disease detection</p>
+            <form action="/predict" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image" accept="image/*" required title="Select leaf image">
+                <br>
+                <button type="submit"><i class="fas fa-search"></i> Diagnose Image</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-video"></i> Upload Leaf Video</h3>
+            <p>Upload a video of teak leaves for comprehensive analysis</p>
+            <form action="/predict_video" method="POST" enctype="multipart/form-data">
+                <input type="file" name="video" accept="video/*" required title="Select leaf video">
+                <br>
+                <button type="submit"><i class="fas fa-search"></i> Diagnose Video</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Error Messages -->
+    {% if error_message %}
+    <div class="error-box"><i class="fas fa-exclamation-circle"></i> {{ error_message }}</div>
+    {% endif %}
+
+    <!-- Single Prediction -->
+    {% if prediction %}
+    <div class="result-box success-box">
+        <h2><i class="fas fa-check-circle"></i> Predicted Disease: {{ prediction }}</h2>
+        {% if explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ explanation }}</p>{% endif %}
+        {% if details.water %}<p><strong><i class="fas fa-tint"></i> Water:</strong> {{ details.water }}</p>{% endif %}
+        {% if details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ details.fertilizer }}</p>{% endif %}
+        {% if details.medicine %}
+            <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
+            <ul>{% for med in details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
+        {% endif %}
+        {% if details.organic_medicine %}
+            <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
+            <ul>{% for org in details.organic_medicine %}<li>{{ org }}</li>{% endfor %}</ul>
+        {% endif %}
+        {% if details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ details.prevention }}</p>{% endif %}
+        {% if image_url %}
+            <p><strong>Uploaded Image:</strong></p>
+            <img src="{{ image_url }}" width="300" alt="Uploaded Leaf Image">
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Multi Prediction -->
+    {% if multi_predictions %}
+    <div class="result-box success-box">
+        <h2><i class="fas fa-clipboard-list"></i> Detected Diseases</h2>
+        {% for item in multi_predictions %}
+            <h3 style="color: var(--dark);">{{ item.label }}</h3>
+            {% if item.details.explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ item.details.explanation }}</p>{% endif %}
+            {% if item.details.water %}<p><strong><i class="fas fa-tint"></i> Water:</strong> {{ item.details.water }}</p>{% endif %}
+            {% if item.details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ item.details.fertilizer }}</p>{% endif %}
+            {% if item.details.medicine %}
+                <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
+                <ul>{% for med in item.details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
+            {% endif %}
+            {% if item.details.organic_medicine %}
+                <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
+                <ul>{% for org in item.details.organic_medicine %}<li>{{ org }}</li>{% endfor %}}</ul>
+            {% endif %}
+            {% if item.details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ item.details.prevention }}</p>{% endif %}
+            {% if image_url %}
+                <p><strong>Uploaded Video Frame:</strong></p>
+                <img src="{{ image_url }}" alt="Video Frame" width="300">
+            {% endif %}
+            <hr>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Teak Disease Detection | Built with <i class="fas fa-heart"></i> for Farmers</p>
+    <p style="font-weight: bold; color: var(--secondary);">Powered by TDA TECHNOLOGY</p>
+  </div>
+</footer>
+
+<!-- Floating Contact Button -->
+<button class="contact-btn" onclick="toggleContactForm()">
+  <i class="fas fa-envelope"></i> Contact
+</button>
+
+<!-- Contact Form Popup -->
+<div class="contact-popup" id="contactForm">
+    <h3>Contact Us</h3>
+    <form action="/send_email" method="POST" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+        <input type="file" name="photo" accept="image/*" title="Attach photo (optional)">
+        <button type="submit"><i class="fas fa-paper-plane"></i> Send Message</button>
+    </form>
+</div>
+
+<script>
+  // Simple animation on scroll
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.card');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    cards.forEach(card => {
+      card.style.animationPlayState = 'paused';
+      observer.observe(card);
+    });
+  });
+
+  // Contact form toggle
+  function toggleContactForm() {
+    var form = document.getElementById("contactForm");
+    form.style.display = (form.style.display === "block") ? "none" : "block";
+  }
+</script>
+
+</body>
+</html>

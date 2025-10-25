@@ -1,0 +1,107 @@
+{
+  "Anthracnose": {
+    "fertilizer": "Balanced NPK, avoid excess nitrogen",
+    "water": "Maintain moderate moisture, avoid waterlogging",
+    "medicine": ["Copper oxychloride", "Mancozeb"],
+    "organic_medicine": ["Neem oil spray", "Garlic extract"],
+    "prevention": "Prune affected branches, use disease-free saplings, maintain field hygiene."
+  },
+  "bark eating caterpillar": {
+    "fertilizer": "Balanced fertilizer application",
+    "water": "Normal irrigation",
+    "medicine": ["Chlorpyrifos", "Quinalphos"],
+    "organic_medicine": ["Neem oil + kerosene paste"],
+    "prevention": "Remove affected bark and apply protective paste on trunk."
+  },
+  "Damping_Off": {
+    "fertilizer": "Avoid over-fertilization",
+    "water": "Well-drained soil, avoid waterlogging",
+    "medicine": ["Captan", "Thiram"],
+    "organic_medicine": ["Trichoderma harzianum seed treatment"],
+    "prevention": "Use sterilized soil and disease-free seeds."
+  },
+  "Fusarium_Wilt": {
+    "fertilizer": "Apply balanced NPK and avoid excess nitrogen",
+    "water": "Avoid overwatering",
+    "medicine": ["Carbendazim soil drench", "Fosetyl-Al"],
+    "organic_medicine": ["Neem cake soil amendment"],
+    "prevention": "Use resistant varieties and remove infected plants."
+  },
+  "Healthy": {
+    "fertilizer": "Maintain balanced NPK",
+    "water": "Normal irrigation",
+    "medicine": ["No treatment needed"],
+    "organic_medicine": ["Vermicompost", "Neem cake"],
+    "prevention": "Routine monitoring and proper field management."
+  },
+  "leaf blight": {
+    "fertilizer": "Balanced NPK; avoid excess nitrogen",
+    "water": "Maintain optimum soil moisture",
+    "medicine": ["Mancozeb", "Copper oxychloride"],
+    "organic_medicine": ["Neem oil", "Garlic extract"],
+    "prevention": "Prune infected leaves and remove debris."
+  },
+  "Leaf_Rust": {
+    "fertilizer": "Balanced NPK, ensure potassium sufficiency",
+    "water": "Avoid overhead irrigation",
+    "medicine": ["Sulphur-based fungicides", "Mancozeb"],
+    "organic_medicine": ["Neem extract spray"],
+    "prevention": "Use resistant clones and remove affected leaves."
+  },
+  "Leaf_Spot": {
+    "fertilizer": "Balanced NPK with adequate potassium",
+    "water": "Maintain proper drainage",
+    "medicine": ["Copper oxychloride", "Mancozeb"],
+    "organic_medicine": ["Neem oil spray"],
+    "prevention": "Remove fallen leaves and maintain tree spacing."
+  },
+  "Longhorn Beetle (Dihammus cervinus)": {
+    "fertilizer": "Balanced nutrients, avoid excess nitrogen",
+    "water": "Normal irrigation",
+    "medicine": ["Chlorpyrifos", "Cypermethrin"],
+    "organic_medicine": ["Neem oil injection"],
+    "prevention": "Remove infested branches and trap adults with pheromones."
+  },
+  "Powdery_Mildew": {
+    "fertilizer": "Avoid excess nitrogen",
+    "water": "Moderate irrigation, avoid wet foliage",
+    "medicine": ["Sulphur dusting", "Mancozeb spray"],
+    "organic_medicine": ["Neem oil spray", "Baking soda solution"],
+    "prevention": "Ensure proper ventilation and pruning to reduce humidity."
+  },
+  "Root_Basal_Rot": {
+    "fertilizer": "Balanced fertilization with organic matter",
+    "water": "Avoid waterlogging, ensure well-drained soil",
+    "medicine": ["Carbendazim soil drench", "Fosetyl-Al"],
+    "organic_medicine": ["Neem cake soil amendment"],
+    "prevention": "Remove infected seedlings and improve soil drainage."
+  },
+  "Teak defoliator": {
+    "fertilizer": "Balanced fertilizer application",
+    "water": "Normal irrigation",
+    "medicine": ["Quinalphos", "Chlorpyrifos"],
+    "organic_medicine": ["Neem oil spray", "Bt (Bacillus thuringiensis)"],
+    "prevention": "Monitor early and manually remove infested leaves."
+  },
+  "Teak Skeletonizer": {
+    "fertilizer": "Balanced NPK",
+    "water": "Normal irrigation",
+    "medicine": ["Chlorpyrifos", "Quinalphos"],
+    "organic_medicine": ["Neem oil spray", "Bt spray"],
+    "prevention": "Prune affected branches and destroy larvae."
+  },
+  "Teak Stem Borer (Alcterogystia cadambae)": {
+    "fertilizer": "Balanced fertilization",
+    "water": "Maintain normal moisture",
+    "medicine": ["Carbaryl", "Chlorpyrifos injections"],
+    "organic_medicine": ["Neem oil paste on trunk"],
+    "prevention": "Remove infested wood and apply protective paste on trunk."
+  },
+  "White Grubs and Termites (Holotrichia spp)": {
+    "fertilizer": "Balanced NPK with organic matter",
+    "water": "Avoid waterlogging",
+    "medicine": ["Carbofuran granules", "Imidacloprid soil treatment"],
+    "organic_medicine": ["Neem cake soil amendment"],
+    "prevention": "Plough soil to expose larvae and maintain soil health."
+  }
+}
