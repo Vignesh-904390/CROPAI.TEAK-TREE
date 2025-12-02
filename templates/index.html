@@ -274,6 +274,69 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
+    /* Language Tabs */
+    .language-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+    
+    .language-tab {
+      padding: 10px 20px;
+      background: var(--light);
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border-radius: 5px 5px 0 0;
+      margin-right: 5px;
+    }
+    
+    .language-tab.active {
+      background: var(--primary-light);
+      color: var(--white);
+    }
+    
+    .language-tab:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .language-content {
+      display: none;
+    }
+    
+    .language-content.active {
+      display: block;
+    }
+    
+    /* Tamil Content Styling */
+    .tamil-content {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+      direction: ltr;
+      text-align: left;
+    }
+    
+    .tamil-content h3 {
+      color: var(--dark);
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    
+    /* Tamil Disease Name */
+    .tamil-disease-name {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--dark);
+      margin-bottom: 15px;
+      padding: 10px;
+      background: var(--light);
+      border-radius: 8px;
+      border-left: 4px solid var(--secondary);
+    }
+    
     /* Flash Message Styles */
     .flash-message {
       margin: 15px 0;
@@ -455,19 +518,18 @@
         width: 300px;
         right: 10px;
       }
+      
+      .language-tabs {
+        flex-direction: column;
+      }
+      
+      .language-tab {
+        margin-bottom: 5px;
+      }
     }
   </style>
 </head>
 <body>
-
-<header class="navbar">
-  <div class="container">
-    <div class="logo">
-      <img src="/static/images/cropai-logo.png" alt="CropAI Logo">
-      Teak Disease Detection
-    </div>
-  </div>
-</header>
 
 <section class="hero">
   <div class="hero-content">
@@ -519,18 +581,61 @@
     {% if prediction %}
     <div class="result-box success-box">
         <h2><i class="fas fa-check-circle"></i> Predicted Disease: {{ prediction }}</h2>
-        {% if explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ explanation }}</p>{% endif %}
-        {% if details.water %}<p><strong><i class="fas fa-tint"></i> Water:</strong> {{ details.water }}</p>{% endif %}
-        {% if details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ details.fertilizer }}</p>{% endif %}
-        {% if details.medicine %}
-            <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
-            <ul>{% for med in details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
-        {% endif %}
-        {% if details.organic_medicine %}
-            <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
-            <ul>{% for org in details.organic_medicine %}<li>{{ org }}</li>{% endfor %}</ul>
-        {% endif %}
-        {% if details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ details.prevention }}</p>{% endif %}
+        
+        <!-- Language Tabs for Single Prediction -->
+        <div class="language-tabs">
+            <button class="language-tab active" onclick="switchLanguage(this, 'english-single')">English</button>
+            <button class="language-tab" onclick="switchLanguage(this, 'tamil-single')">தமிழ்</button>
+        </div>
+        
+        <!-- English Content for Single Prediction -->
+        <div id="english-single" class="language-content active">
+            {% if details.explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ details.explanation }}</p>{% endif %}
+            {% if details.water %}<p><strong><i class="fas fa-tint"></i> Water:</strong> {{ details.water }}</p>{% endif %}
+            {% if details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ details.fertilizer }}</p>{% endif %}
+            {% if details.medicine %}
+                <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
+                <ul>{% for med in details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
+            {% endif %}
+            {% if details.organic_medicine %}
+                <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
+                <ul>{% for org in details.organic_medicine %}<li>{{ org }}</li>{% endfor %}</ul>
+            {% endif %}
+            {% if details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ details.prevention }}</p>{% endif %}
+        </div>
+        
+        <!-- Tamil Content for Single Prediction -->
+        <div id="tamil-single" class="language-content tamil-content">
+            <!-- Tamil Disease Name -->
+            <div class="tamil-disease-name">
+                {% if details.tamil_details and details.tamil_details.பெயர் %}
+                    {{ details.tamil_details.பெயர் }}
+                {% else %}
+                    {{ prediction }} - தமிழில்
+                {% endif %}
+            </div>
+            
+            {% if details.tamil_details and details.tamil_details.விளக்கம் %}<p><strong><i class="fas fa-stethoscope"></i> விளக்கம்:</strong> {{ details.tamil_details.விளக்கம் }}</p>{% endif %}
+            {% if details.tamil_details and details.tamil_details.நீர் %}<p><strong><i class="fas fa-tint"></i> நீர்:</strong> {{ details.tamil_details.நீர் }}</p>{% endif %}
+            {% if details.tamil_details and details.tamil_details.உரம் %}<p><strong><i class="fas fa-seedling"></i> உரம்:</strong> {{ details.tamil_details.உரம் }}</p>{% endif %}
+            {% if details.tamil_details and details.tamil_details.மருந்து %}
+                <p><strong><i class="fas fa-pills"></i> மருந்து:</strong></p>
+                <ul>{% for med in details.tamil_details.மருந்து %}<li>{{ med }}</li>{% endfor %}</ul>
+            {% endif %}
+            {% if details.tamil_details and details.tamil_details.கரிம_மருந்து %}
+                <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
+                <ul>{% for org in details.tamil_details.கரிம_மருந்து %}<li>{{ org }}</li>{% endfor %}</ul>
+            {% elif details.tamil_details and details.tamil_details['கரிம மருந்து'] %}
+                <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
+                <ul>{% for org in details.tamil_details['கரிம மருந்து'] %}<li>{{ org }}</li>{% endfor %}</ul>
+            {% endif %}
+            {% if details.tamil_details and details.tamil_details.தடுப்பு_முறைகள் %}
+                <p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ details.tamil_details.தடுப்பு_முறைகள் }}</p>
+            {% elif details.tamil_details and details.tamil_details['தடுப்பு முறைகள்'] %}
+                <p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ details.tamil_details['தடுப்பு முறைகள்'] }}</p>
+            {% endif %}
+        </div>
+        
         {% if image_url %}
             <p><strong>Uploaded Image:</strong></p>
             <img src="{{ image_url }}" width="300" alt="Uploaded Leaf Image">
@@ -543,19 +648,61 @@
     <div class="result-box success-box">
         <h2><i class="fas fa-clipboard-list"></i> Detected Diseases</h2>
         {% for item in multi_predictions %}
-            <h3 style="color: var(--dark);">{{ item.label }}</h3>
-            {% if item.details.explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ item.details.explanation }}</p>{% endif %}
-            {% if item.details.water %}<p><strong><i class="fas fa-tint"></i> Water:</strong> {{ item.details.water }}</p>{% endif %}
-            {% if item.details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ item.details.fertilizer }}</p>{% endif %}
-            {% if item.details.medicine %}
-                <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
-                <ul>{% for med in item.details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
-            {% endif %}
-            {% if item.details.organic_medicine %}
-                <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
-                <ul>{% for org in item.details.organic_medicine %}<li>{{ org }}</li>{% endfor %}}</ul>
-            {% endif %}
-            {% if item.details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ item.details.prevention }}</p>{% endif %}
+            <!-- Language Tabs -->
+            <div class="language-tabs">
+                <button class="language-tab active" onclick="switchLanguage(this, 'english-{{ loop.index }}')">English</button>
+                <button class="language-tab" onclick="switchLanguage(this, 'tamil-{{ loop.index }}')">தமிழ்</button>
+            </div>
+            
+            <!-- English Content -->
+            <div id="english-{{ loop.index }}" class="language-content active">
+                <h3 style="color: var(--dark);">{{ item.label }}</h3>
+                {% if item.details.explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ item.details.explanation }}</p>{% endif %}
+                {% if item.details.water %}<p><strong><i class="fas fa-tint"></i> Water:</strong> {{ item.details.water }}</p>{% endif %}
+                {% if item.details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ item.details.fertilizer }}</p>{% endif %}
+                {% if item.details.medicine %}
+                    <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
+                    <ul>{% for med in item.details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if item.details.organic_medicine %}
+                    <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
+                    <ul>{% for org in item.details.organic_medicine %}<li>{{ org }}</li>{% endfor %}}</ul>
+                {% endif %}
+                {% if item.details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ item.details.prevention }}</p>{% endif %}
+            </div>
+            
+            <!-- Tamil Content -->
+            <div id="tamil-{{ loop.index }}" class="language-content tamil-content">
+                <!-- Tamil Disease Name -->
+                <div class="tamil-disease-name">
+                    {% if item.details.tamil_details and item.details.tamil_details.பெயர் %}
+                        {{ item.details.tamil_details.பெயர் }}
+                    {% else %}
+                        {{ item.label }} - தமிழில்
+                    {% endif %}
+                </div>
+                
+                {% if item.details.tamil_details and item.details.tamil_details.விளக்கம் %}<p><strong><i class="fas fa-stethoscope"></i> விளக்கம்:</strong> {{ item.details.tamil_details.விளக்கம் }}</p>{% endif %}
+                {% if item.details.tamil_details and item.details.tamil_details.நீர் %}<p><strong><i class="fas fa-tint"></i> நீர்:</strong> {{ item.details.tamil_details.நீர் }}</p>{% endif %}
+                {% if item.details.tamil_details and item.details.tamil_details.உரம் %}<p><strong><i class="fas fa-seedling"></i> உரம்:</strong> {{ item.details.tamil_details.உரம் }}</p>{% endif %}
+                {% if item.details.tamil_details and item.details.tamil_details.மருந்து %}
+                    <p><strong><i class="fas fa-pills"></i> மருந்து:</strong></p>
+                    <ul>{% for med in item.details.tamil_details.மருந்து %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if item.details.tamil_details and item.details.tamil_details.கரிம_மருந்து %}
+                    <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
+                    <ul>{% for org in item.details.tamil_details.கரிம_மருந்து %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% elif item.details.tamil_details and item.details.tamil_details['கரிம மருந்து'] %}
+                    <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
+                    <ul>{% for org in item.details.tamil_details['கரிம மருந்து'] %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if item.details.tamil_details and item.details.tamil_details.தடுப்பு_முறைகள் %}
+                    <p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ item.details.tamil_details.தடுப்பு_முறைகள் }}</p>
+                {% elif item.details.tamil_details and item.details.tamil_details['தடுப்பு முறைகள்'] %}
+                    <p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ item.details.tamil_details['தடுப்பு முறைகள்'] }}</p>
+                {% endif %}
+            </div>
+            
             {% if image_url %}
                 <p><strong>Uploaded Video Frame:</strong></p>
                 <img src="{{ image_url }}" alt="Video Frame" width="300">
@@ -614,6 +761,26 @@
   function toggleContactForm() {
     var form = document.getElementById("contactForm");
     form.style.display = (form.style.display === "block") ? "none" : "block";
+  }
+
+  // Language switching function
+  function switchLanguage(button, languageId) {
+    // Remove active class from all tabs
+    const tabs = button.parentElement.querySelectorAll('.language-tab');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    
+    // Add active class to clicked tab
+    button.classList.add('active');
+    
+    // Hide all language contents
+    const contents = button.parentElement.parentElement.querySelectorAll('.language-content');
+    contents.forEach(content => content.classList.remove('active'));
+    
+    // Show selected language content
+    const selectedContent = document.getElementById(languageId);
+    if (selectedContent) {
+      selectedContent.classList.add('active');
+    }
   }
 </script>
 
