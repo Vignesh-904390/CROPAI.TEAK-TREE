@@ -2,20 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Teak Disease Detection</title>
+  <title>Teak Tree Disease Detection</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2e7d32;
-      --primary-light: #4caf50;
-      --secondary: #ff9800;
-      --dark: #1b5e20;
-      --light: #e8f5e9;
+      --primary: #8B4513;
+      --primary-light: #A0522D;
+      --secondary: #D2691E;
+      --dark: #654321;
+      --light: #F5F5DC;
       --white: #ffffff;
       --gray: #f5f5f5;
       --text: #333333;
+      --chatbot-color: #2196F3;
     }
     
     * {
@@ -98,14 +99,96 @@
       transform: translateY(-2px);
     }
     
-    /* Hero Section */
+    /* Language Selector */
+    .language-selector {
+      position: relative;
+      margin-left: 10px;
+    }
+    
+    .language-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .language-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .language-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      min-width: 180px;
+      z-index: 1000;
+      display: none;
+      overflow: hidden;
+      margin-top: 5px;
+    }
+    
+    .language-dropdown.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .language-option {
+      padding: 12px 20px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--gray);
+    }
+    
+    .language-option:last-child {
+      border-bottom: none;
+    }
+    
+    .language-option:hover {
+      background: var(--light);
+      color: var(--primary);
+    }
+    
+    .language-option.active {
+      background: var(--primary-light);
+      color: var(--white);
+    }
+    
+    .language-flag {
+      width: 24px;
+      height: 16px;
+      border-radius: 2px;
+      object-fit: cover;
+    }
+    
+    /* Hero Section - Full Banner */
     .hero {
-      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1598880940083-2d4b8148532f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') no-repeat center center/cover;
-      height: 60vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3)), 
+                  url('https://assets-news.housing.com/news/wp-content/uploads/2023/01/25014238/sagwan-tree-feature-compressed-1.jpg') 
+                  no-repeat center center/cover;
+      height: 80vh;
       display: flex;
       align-items: center;
       text-align: center;
       position: relative;
+      margin-bottom: 40px;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(1.1) contrast(1.1);
+      -webkit-filter: brightness(1.1) contrast(1.1);
     }
     
     .hero-content {
@@ -114,6 +197,7 @@
       color: var(--white);
       padding: 0 20px;
       animation: fadeIn 1.5s ease-in;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
     }
     
     @keyframes fadeIn {
@@ -123,15 +207,17 @@
     
     .hero h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 3.5rem;
-      font-weight: 800;
+      font-size: 4rem;
+      font-weight: 900;
       margin-bottom: 20px;
       line-height: 1.2;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
     }
     
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       margin-bottom: 30px;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
     }
     
     /* Upload Section */
@@ -152,6 +238,7 @@
       position: relative;
       z-index: 1;
       overflow: hidden;
+      border: 1px solid rgba(139, 69, 19, 0.1);
     }
     
     .card::before {
@@ -207,7 +294,7 @@
     
     .card input[type="file"]:hover {
       border-color: var(--primary);
-      background: rgba(76, 175, 80, 0.1);
+      background: rgba(139, 69, 19, 0.1);
     }
     
     .card button {
@@ -220,12 +307,12 @@
       font-weight: 600;
       font-size: 1rem;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+      box-shadow: 0 4px 15px rgba(210, 105, 30, 0.3);
       width: 100%;
     }
     
     .card button:hover {
-      background: #f57c00;
+      background: #B85C14;
       transform: translateY(-3px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
@@ -241,6 +328,7 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+      border: 1px solid rgba(139, 69, 19, 0.1);
     }
     
     .result-box::before {
@@ -274,59 +362,50 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
-    /* Language Tabs */
-    .language-tabs {
-      display: flex;
-      margin-bottom: 20px;
-      border-bottom: 2px solid var(--primary-light);
-    }
-    
-    .language-tab {
-      padding: 10px 20px;
-      background: var(--light);
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      border-radius: 5px 5px 0 0;
-      margin-right: 5px;
-    }
-    
-    .language-tab.active {
-      background: var(--primary-light);
-      color: var(--white);
-    }
-    
-    .language-tab:hover {
-      background: var(--primary);
-      color: var(--white);
-    }
-    
+    /* Language Content Styling */
     .language-content {
       display: none;
+      text-align: left;
     }
     
     .language-content.active {
       display: block;
     }
     
-    /* Tamil Content Styling */
+    /* Language-specific styling */
     .tamil-content {
       font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
       direction: ltr;
-      text-align: left;
     }
     
-    .tamil-content h3 {
-      color: var(--dark);
-      border-bottom: 2px solid var(--secondary);
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-    }
-    
-    /* Tamil Disease Name */
-    .tamil-disease-name {
+    .hindi-content {
       font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+      direction: ltr;
+    }
+    
+    .telugu-content {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+      direction: ltr;
+    }
+    
+    .kannada-content {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+      direction: ltr;
+    }
+    
+    .malayalam-content {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+      direction: ltr;
+    }
+    
+    .urdu-content {
+      font-family: 'Noto Nastaliq Urdu', 'Arial Unicode MS', sans-serif;
+      direction: rtl;
+      text-align: right;
+    }
+    
+    /* Disease Name in Different Languages */
+    .disease-name {
       font-size: 1.5rem;
       font-weight: bold;
       color: var(--dark);
@@ -335,6 +414,31 @@
       background: var(--light);
       border-radius: 8px;
       border-left: 4px solid var(--secondary);
+    }
+    
+    .disease-name-tamil {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+    }
+    
+    .disease-name-hindi {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+    }
+    
+    .disease-name-telugu {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+    }
+    
+    .disease-name-kannada {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+    }
+    
+    .disease-name-malayalam {
+      font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+    }
+    
+    .disease-name-urdu {
+      font-family: 'Noto Nastaliq Urdu', 'Arial Unicode MS', sans-serif;
+      direction: rtl;
     }
     
     /* Flash Message Styles */
@@ -385,6 +489,52 @@
       margin: 20px 0;
       color: var(--dark);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    /* Disease Item Styling */
+    .disease-item {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--primary);
+    }
+    
+    .disease-item h3 {
+      color: var(--dark);
+      margin-bottom: 15px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* Language Tabs */
+    .language-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    
+    .language-tab {
+      padding: 8px 16px;
+      background: var(--light);
+      border: 1px solid var(--primary-light);
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .language-tab:hover {
+      background: var(--primary-light);
+      color: var(--white);
+    }
+    
+    .language-tab.active {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
     }
     
     /* Footer */
@@ -440,6 +590,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       z-index: 1001;
       animation: fadeIn 0.3s ease;
+      border: 1px solid rgba(139, 69, 19, 0.1);
     }
     
     .contact-popup h3 {
@@ -464,7 +615,7 @@
     .contact-popup input:focus,
     .contact-popup textarea:focus {
       border-color: var(--primary-light);
-      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+      box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
       outline: none;
     }
     
@@ -486,6 +637,150 @@
       transform: translateY(-2px);
     }
     
+    /* Chatbot Avatar Styles */
+    .chatbot-avatar {
+      position: fixed;
+      bottom: 100px;
+      left: 20px;
+      z-index: 1000;
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+    
+    .chatbot-avatar:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    .chatbot-avatar .avatar-container {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    
+    .chatbot-avatar .avatar-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--chatbot-color);
+      box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
+      animation: dance 3s infinite ease-in-out;
+    }
+    
+    @keyframes dance {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-10px) rotate(5deg);
+      }
+      50% {
+        transform: translateY(-5px) rotate(-5deg);
+      }
+      75% {
+        transform: translateY(-10px) rotate(5deg);
+      }
+    }
+    
+    .chatbot-avatar .chatbot-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--white);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid var(--gray);
+      margin-bottom: 10px;
+    }
+    
+    .chatbot-avatar .chatbot-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px;
+      border-style: solid;
+      border-color: var(--white) transparent transparent transparent;
+    }
+    
+    .chatbot-avatar:hover .chatbot-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-5px);
+    }
+    
+    .chatbot-avatar .chatbot-pulse {
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(33, 150, 243, 0.6);
+      animation: pulse-ring 2s infinite;
+    }
+    
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.8);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.3);
+        opacity: 0;
+      }
+    }
+    
+    /* Chatbot Speech Bubble */
+    .chatbot-speech {
+      position: absolute;
+      bottom: 85px;
+      left: 100px;
+      background: var(--white);
+      padding: 15px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      max-width: 250px;
+      font-size: 0.9rem;
+      animation: floatBubble 4s infinite ease-in-out;
+      border: 1px solid var(--gray);
+      display: none;
+    }
+    
+    @keyframes floatBubble {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .chatbot-speech::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 20px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: var(--white) transparent transparent transparent;
+    }
+    
+    .chatbot-avatar:hover .chatbot-speech {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
     /* Animation for cards */
     @keyframes slideIn {
       from { opacity: 0; transform: translateY(50px); }
@@ -502,12 +797,18 @@
         gap: 15px;
       }
       
+      .hero {
+        height: 60vh;
+        filter: brightness(1.2) contrast(1.2);
+        -webkit-filter: brightness(1.2) contrast(1.2);
+      }
+      
       .hero h1 {
         font-size: 2.5rem;
       }
       
       .hero p {
-        font-size: 1rem;
+        font-size: 1.2rem;
       }
       
       .upload-section {
@@ -519,26 +820,131 @@
         right: 10px;
       }
       
-      .language-tabs {
-        flex-direction: column;
+      .language-selector {
+        margin-top: 10px;
       }
       
-      .language-tab {
-        margin-bottom: 5px;
+      .language-tabs {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      /* Chatbot Avatar Responsive */
+      .chatbot-avatar {
+        bottom: 90px;
+        left: 10px;
+      }
+      
+      .chatbot-avatar .avatar-container {
+        width: 65px;
+        height: 65px;
+      }
+      
+      .chatbot-speech {
+        left: 80px;
+        bottom: 70px;
+        max-width: 200px;
+        font-size: 0.8rem;
+        padding: 12px;
+      }
+      
+      .chatbot-avatar .chatbot-tooltip {
+        font-size: 0.8rem;
+        padding: 10px 14px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .chatbot-avatar {
+        bottom: 80px;
+      }
+      
+      .chatbot-avatar .avatar-container {
+        width: 55px;
+        height: 55px;
+      }
+      
+      .chatbot-speech {
+        left: 70px;
+        bottom: 60px;
+        max-width: 180px;
+      }
+      
+      .contact-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
-
-<section class="hero">
-  <div class="hero-content">
-    <h1>Teak Tree Disease Detection</h1>
-    <p>Upload your teak leaf image or video to detect diseases instantly</p>
+<!-- Chatbot Avatar -->
+<div class="chatbot-avatar" id="chatbotAvatar">
+  <div class="avatar-container">
+    <a href="https://chatbot-izzk.onrender.com/" target="_blank" class="chatbot-link">
+      <img src="https://cdn-icons-png.flaticon.com/512/4711/4711988.png" alt="Chatbot Assistant" class="avatar-image">
+      <div class="chatbot-pulse"></div>
+    </a>
+    <div class="chatbot-tooltip" data-translate="chatbot-tooltip">Need more help? Ask me anything!</div>
+    <div class="chatbot-speech" data-translate="chatbot-speech">You want more information? Feel free to ask me! 😊</div>
   </div>
-</section>
+</div>
+
+<!-- Header Banner -->
+<header class="hero">
+  <div class="hero-content">
+    <h1 data-translate="hero-title">Teak Tree Disease Detection</h1>
+    <p data-translate="hero-subtitle">Upload your teak leaf image or video to detect diseases instantly with AI-powered analysis</p>
+  </div>
+</header>
 
 <div class="container">
+    <!-- Language Selector in Navbar -->
+    <div class="navbar">
+      <div class="container">
+        <div class="logo">
+          <i class="fas fa-tree"></i>
+          <span data-translate="app-name">Teak Disease Detection</span>
+        </div>
+        <div class="language-selector">
+          <button class="language-btn" id="languageBtn">
+            <i class="fas fa-globe"></i>
+            <span id="currentLanguage">English</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="language-dropdown" id="languageDropdown">
+            <div class="language-option active" data-lang="en">
+              <img src="https://flagcdn.com/w40/gb.png" class="language-flag" alt="English">
+              English
+            </div>
+            <div class="language-option" data-lang="ta">
+              <img src="https://flagcdn.com/w40/in.png" class="language-flag" alt="Tamil">
+              தமிழ் (Tamil)
+            </div>
+            <div class="language-option" data-lang="hi">
+              <img src="https://flagcdn.com/w40/in.png" class="language-flag" alt="Hindi">
+              हिन्दी (Hindi)
+            </div>
+            <div class="language-option" data-lang="ml">
+              <img src="https://flagcdn.com/w40/in.png" class="language-flag" alt="Malayalam">
+              മലയാളം (Malayalam)
+            </div>
+            <div class="language-option" data-lang="te">
+              <img src="https://flagcdn.com/w40/in.png" class="language-flag" alt="Telugu">
+              తెలుగు (Telugu)
+            </div>
+            <div class="language-option" data-lang="kn">
+              <img src="https://flagcdn.com/w40/in.png" class="language-flag" alt="Kannada">
+              ಕನ್ನಡ (Kannada)
+            </div>
+            <div class="language-option" data-lang="ur">
+              <img src="https://flagcdn.com/w40/pk.png" class="language-flag" alt="Urdu">
+              اردو (Urdu)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -552,22 +958,22 @@
     <!-- Upload Options -->
     <div class="upload-section">
         <div class="card">
-            <h3><i class="fas fa-camera"></i> Upload Leaf Image</h3>
-            <p>Upload a clear image of a teak leaf for disease detection</p>
+            <h3><i class="fas fa-camera"></i> <span data-translate="upload-image-title">Upload Leaf Image</span></h3>
+            <p data-translate="upload-image-desc">Upload a clear image of a teak leaf for disease detection</p>
             <form action="/predict" method="POST" enctype="multipart/form-data">
                 <input type="file" name="image" accept="image/*" required title="Select leaf image">
                 <br>
-                <button type="submit"><i class="fas fa-search"></i> Diagnose Image</button>
+                <button type="submit"><i class="fas fa-search"></i> <span data-translate="diagnose-image">Diagnose Image</span></button>
             </form>
         </div>
 
         <div class="card">
-            <h3><i class="fas fa-video"></i> Upload Leaf Video</h3>
-            <p>Upload a video of teak leaves for comprehensive analysis</p>
+            <h3><i class="fas fa-video"></i> <span data-translate="upload-video-title">Upload Leaf Video</span></h3>
+            <p data-translate="upload-video-desc">Upload a video of teak leaves for comprehensive analysis</p>
             <form action="/predict_video" method="POST" enctype="multipart/form-data">
                 <input type="file" name="video" accept="video/*" required title="Select leaf video">
                 <br>
-                <button type="submit"><i class="fas fa-search"></i> Diagnose Video</button>
+                <button type="submit"><i class="fas fa-search"></i> <span data-translate="diagnose-video">Diagnose Video</span></button>
             </form>
         </div>
     </div>
@@ -580,65 +986,144 @@
     <!-- Single Prediction -->
     {% if prediction %}
     <div class="result-box success-box">
-        <h2><i class="fas fa-check-circle"></i> Predicted Disease: {{ prediction }}</h2>
+        <h2><i class="fas fa-check-circle"></i> <span data-translate="predicted-disease">Predicted Disease</span>: <span id="prediction-text">{{ prediction }}</span></h2>
         
-        <!-- Language Tabs for Single Prediction -->
+        <!-- Language Tabs -->
         <div class="language-tabs">
-            <button class="language-tab active" onclick="switchLanguage(this, 'english-single')">English</button>
-            <button class="language-tab" onclick="switchLanguage(this, 'tamil-single')">தமிழ்</button>
+            <button class="language-tab active" data-lang="en">English</button>
+            <button class="language-tab" data-lang="ta">தமிழ்</button>
+            <button class="language-tab" data-lang="hi">हिन्दी</button>
+            <button class="language-tab" data-lang="ml">മലയാളം</button>
+            <button class="language-tab" data-lang="te">తెలుగు</button>
+            <button class="language-tab" data-lang="kn">ಕನ್ನಡ</button>
+            <button class="language-tab" data-lang="ur">اردو</button>
         </div>
         
-        <!-- English Content for Single Prediction -->
-        <div id="english-single" class="language-content active">
-            {% if details.explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ details.explanation }}</p>{% endif %}
-            {% if details.water %}<p><strong><i class="fas fa-tint"></i> Water:</strong> {{ details.water }}</p>{% endif %}
-            {% if details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ details.fertilizer }}</p>{% endif %}
-            {% if details.medicine %}
-                <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
-                <ul>{% for med in details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
-            {% endif %}
-            {% if details.organic_medicine %}
-                <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
-                <ul>{% for org in details.organic_medicine %}<li>{{ org }}</li>{% endfor %}</ul>
-            {% endif %}
-            {% if details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ details.prevention }}</p>{% endif %}
-        </div>
-        
-        <!-- Tamil Content for Single Prediction -->
-        <div id="tamil-single" class="language-content tamil-content">
-            <!-- Tamil Disease Name -->
-            <div class="tamil-disease-name">
-                {% if details.tamil_details and details.tamil_details.பெயர் %}
-                    {{ details.tamil_details.பெயர் }}
-                {% else %}
-                    {{ prediction }} - தமிழில்
+        <!-- Disease Details in Selected Language -->
+        <div id="disease-details-container">
+            <!-- English Content -->
+            <div class="language-content active" data-lang="en">
+                <div class="disease-name">{{ prediction }}</div>
+                {% if details.explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ details.explanation }}</p>{% endif %}
+                {% if details.water %}<p><strong><i class="fas fa-tint"></i> Water Requirements:</strong> {{ details.water }}</p>{% endif %}
+                {% if details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ details.fertilizer }}</p>{% endif %}
+                {% if details.medicine %}
+                    <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
+                    <ul>{% for med in details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
                 {% endif %}
+                {% if details.organic_medicine %}
+                    <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
+                    <ul>{% for org in details.organic_medicine %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ details.prevention }}</p>{% endif %}
             </div>
             
-            {% if details.tamil_details and details.tamil_details.விளக்கம் %}<p><strong><i class="fas fa-stethoscope"></i> விளக்கம்:</strong> {{ details.tamil_details.விளக்கம் }}</p>{% endif %}
-            {% if details.tamil_details and details.tamil_details.நீர் %}<p><strong><i class="fas fa-tint"></i> நீர்:</strong> {{ details.tamil_details.நீர் }}</p>{% endif %}
-            {% if details.tamil_details and details.tamil_details.உரம் %}<p><strong><i class="fas fa-seedling"></i> உரம்:</strong> {{ details.tamil_details.உரம் }}</p>{% endif %}
-            {% if details.tamil_details and details.tamil_details.மருந்து %}
-                <p><strong><i class="fas fa-pills"></i> மருந்து:</strong></p>
-                <ul>{% for med in details.tamil_details.மருந்து %}<li>{{ med }}</li>{% endfor %}</ul>
-            {% endif %}
-            {% if details.tamil_details and details.tamil_details.கரிம_மருந்து %}
-                <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
-                <ul>{% for org in details.tamil_details.கரிம_மருந்து %}<li>{{ org }}</li>{% endfor %}</ul>
-            {% elif details.tamil_details and details.tamil_details['கரிம மருந்து'] %}
-                <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
-                <ul>{% for org in details.tamil_details['கரிம மருந்து'] %}<li>{{ org }}</li>{% endfor %}</ul>
-            {% endif %}
-            {% if details.tamil_details and details.tamil_details.தடுப்பு_முறைகள் %}
-                <p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ details.tamil_details.தடுப்பு_முறைகள் }}</p>
-            {% elif details.tamil_details and details.tamil_details['தடுப்பு முறைகள்'] %}
-                <p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ details.tamil_details['தடுப்பு முறைகள்'] }}</p>
-            {% endif %}
+            <!-- Tamil Content -->
+            <div class="language-content tamil-content" data-lang="ta">
+                <div class="disease-name disease-name-tamil">{{ details.tamil.get('பெயர்', prediction) }}</div>
+                <p><strong><i class="fas fa-stethoscope"></i> வகை:</strong> {{ details.tamil.get('வகை', 'N/A') }}</p>
+                {% if details.tamil.get('நீர்') %}<p><strong><i class="fas fa-tint"></i> நீர் தேவை:</strong> {{ details.tamil.get('நீர்', 'N/A') }}</p>{% endif %}
+                {% if details.tamil.get('உரம்') %}<p><strong><i class="fas fa-seedling"></i> உரம்:</strong> {{ details.tamil.get('உரம்', 'N/A') }}</p>{% endif %}
+                {% if details.tamil.get('மருந்து') %}
+                    <p><strong><i class="fas fa-pills"></i> மருந்து:</strong></p>
+                    <ul>{% for med in details.tamil.get('மருந்து', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.tamil.get('கரிம மருந்து') %}
+                    <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
+                    <ul>{% for org in details.tamil.get('கரிம மருந்து', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.tamil.get('தடுப்பு முறைகள்') %}<p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ details.tamil.get('தடுப்பு முறைகள்', 'N/A') }}</p>{% endif %}
+            </div>
+            
+            <!-- Hindi Content -->
+            <div class="language-content hindi-content" data-lang="hi">
+                <div class="disease-name disease-name-hindi">{{ details.hindi.get('नाम', prediction) }}</div>
+                <p><strong><i class="fas fa-stethoscope"></i> प्रकार:</strong> {{ details.hindi.get('प्रकार', 'N/A') }}</p>
+                {% if details.hindi.get('पानी') %}<p><strong><i class="fas fa-tint"></i> पानी की आवश्यकता:</strong> {{ details.hindi.get('पानी', 'N/A') }}</p>{% endif %}
+                {% if details.hindi.get('उर्वरक') %}<p><strong><i class="fas fa-seedling"></i> उर्वरक:</strong> {{ details.hindi.get('उर्वरक', 'N/A') }}</p>{% endif %}
+                {% if details.hindi.get('दवा') %}
+                    <p><strong><i class="fas fa-pills"></i> दवा:</strong></p>
+                    <ul>{% for med in details.hindi.get('दवा', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.hindi.get('जैविक दवा') %}
+                    <p><strong><i class="fas fa-leaf"></i> जैविक दवा:</strong></p>
+                    <ul>{% for org in details.hindi.get('जैविक दवा', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.hindi.get('रोकथाम') %}<p><strong><i class="fas fa-shield-alt"></i> रोकथाम:</strong> {{ details.hindi.get('रोकथाम', 'N/A') }}</p>{% endif %}
+            </div>
+            
+            <!-- Malayalam Content -->
+            <div class="language-content malayalam-content" data-lang="ml">
+                <div class="disease-name disease-name-malayalam">{{ details.malayalam.get('പേര്', prediction) }}</div>
+                <p><strong><i class="fas fa-stethoscope"></i> തരം:</strong> {{ details.malayalam.get('തരം', 'N/A') }}</p>
+                {% if details.malayalam.get('വെള്ളം') %}<p><strong><i class="fas fa-tint"></i> വെള്ളം ആവശ്യം:</strong> {{ details.malayalam.get('വെള്ളം', 'N/A') }}</p>{% endif %}
+                {% if details.malayalam.get('വളം') %}<p><strong><i class="fas fa-seedling"></i> വളം:</strong> {{ details.malayalam.get('വളം', 'N/A') }}</p>{% endif %}
+                {% if details.malayalam.get('മരുന്ന്') %}
+                    <p><strong><i class="fas fa-pills"></i> മരുന്ന്:</strong></p>
+                    <ul>{% for med in details.malayalam.get('മരുന്ന്', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.malayalam.get('ജൈവ മരുന്ന്') %}
+                    <p><strong><i class="fas fa-leaf"></i> ജൈവ മരുന്ന്:</strong></p>
+                    <ul>{% for org in details.malayalam.get('ജൈവ മരുന്ന്', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.malayalam.get('തടയൽ') %}<p><strong><i class="fas fa-shield-alt"></i> തടയൽ:</strong> {{ details.malayalam.get('തടയൽ', 'N/A') }}</p>{% endif %}
+            </div>
+            
+            <!-- Telugu Content -->
+            <div class="language-content telugu-content" data-lang="te">
+                <div class="disease-name disease-name-telugu">{{ details.telugu.get('పేరు', prediction) }}</div>
+                <p><strong><i class="fas fa-stethoscope"></i> రకం:</strong> {{ details.telugu.get('రకం', 'N/A') }}</p>
+                {% if details.telugu.get('నీరు') %}<p><strong><i class="fas fa-tint"></i> నీటి అవసరాలు:</strong> {{ details.telugu.get('నీరు', 'N/A') }}</p>{% endif %}
+                {% if details.telugu.get('ఎరువు') %}<p><strong><i class="fas fa-seedling"></i> ఎరువు:</strong> {{ details.telugu.get('ఎరువు', 'N/A') }}</p>{% endif %}
+                {% if details.telugu.get('మందు') %}
+                    <p><strong><i class="fas fa-pills"></i> మందు:</strong></p>
+                    <ul>{% for med in details.telugu.get('మందు', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.telugu.get('సేంద్రియ మందు') %}
+                    <p><strong><i class="fas fa-leaf"></i> సేంద్రియ మందు:</strong></p>
+                    <ul>{% for org in details.telugu.get('సేంద్రియ మందు', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.telugu.get('నివారణ') %}<p><strong><i class="fas fa-shield-alt"></i> నివారణ:</strong> {{ details.telugu.get('నివారణ', 'N/A') }}</p>{% endif %}
+            </div>
+            
+            <!-- Kannada Content -->
+            <div class="language-content kannada-content" data-lang="kn">
+                <div class="disease-name disease-name-kannada">{{ details.kannada.get('ಹೆಸರು', prediction) }}</div>
+                <p><strong><i class="fas fa-stethoscope"></i> ರೀತಿ:</strong> {{ details.kannada.get('ರೀತಿ', 'N/A') }}</p>
+                {% if details.kannada.get('ನೀರು') %}<p><strong><i class="fas fa-tint"></i> ನೀರಿನ ಅಗತ್ಯ:</strong> {{ details.kannada.get('ನೀರು', 'N/A') }}</p>{% endif %}
+                {% if details.kannada.get('ಎರುವು') %}<p><strong><i class="fas fa-seedling"></i> ಎರುವು:</strong> {{ details.kannada.get('ಎರುವು', 'N/A') }}</p>{% endif %}
+                {% if details.kannada.get('ಮದ್ದು') %}
+                    <p><strong><i class="fas fa-pills"></i> ಮದ್ದು:</strong></p>
+                    <ul>{% for med in details.kannada.get('ಮದ್ದು', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.kannada.get('ಸಾವಯವ ಮದ್ದು') %}
+                    <p><strong><i class="fas fa-leaf"></i> ಸಾವಯವ ಮದ್ದು:</strong></p>
+                    <ul>{% for org in details.kannada.get('ಸಾವಯವ ಮದ್ದು', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.kannada.get('ತಡೆಗಟ್ಟುವಿಕೆ') %}<p><strong><i class="fas fa-shield-alt"></i> ತಡೆಗಟ್ಟುವಿಕೆ:</strong> {{ details.kannada.get('ತಡೆಗಟ್ಟುವಿಕೆ', 'N/A') }}</p>{% endif %}
+            </div>
+            
+            <!-- Urdu Content -->
+            <div class="language-content urdu-content" data-lang="ur">
+                <div class="disease-name disease-name-urdu">{{ details.urdu.get('نام', prediction) }}</div>
+                <p><strong><i class="fas fa-stethoscope"></i> قسم:</strong> {{ details.urdu.get('قسم', 'N/A') }}</p>
+                {% if details.urdu.get('پانی') %}<p><strong><i class="fas fa-tint"></i> پانی کی ضرورت:</strong> {{ details.urdu.get('پانی', 'N/A') }}</p>{% endif %}
+                {% if details.urdu.get('کھاد') %}<p><strong><i class="fas fa-seedling"></i> کھاد:</strong> {{ details.urdu.get('کھاد', 'N/A') }}</p>{% endif %}
+                {% if details.urdu.get('دوا') %}
+                    <p><strong><i class="fas fa-pills"></i> دوا:</strong></p>
+                    <ul>{% for med in details.urdu.get('دوا', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.urdu.get('نامیاتی دوا') %}
+                    <p><strong><i class="fas fa-leaf"></i> نامیاتی دوا:</strong></p>
+                    <ul>{% for org in details.urdu.get('نامیاتی دوا', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                {% endif %}
+                {% if details.urdu.get('روک تھام') %}<p><strong><i class="fas fa-shield-alt"></i> روک تھام:</strong> {{ details.urdu.get('روک تھام', 'N/A') }}</p>{% endif %}
+            </div>
         </div>
         
         {% if image_url %}
-            <p><strong>Uploaded Image:</strong></p>
-            <img src="{{ image_url }}" width="300" alt="Uploaded Leaf Image">
+            <p><strong data-translate="uploaded-image">Uploaded Image</strong>:</p>
+            <img src="{{ image_url }}" width="300" alt="Uploaded Teak Leaf Image">
         {% endif %}
     </div>
     {% endif %}
@@ -646,68 +1131,151 @@
     <!-- Multi Prediction -->
     {% if multi_predictions %}
     <div class="result-box success-box">
-        <h2><i class="fas fa-clipboard-list"></i> Detected Diseases</h2>
+        <h2><i class="fas fa-clipboard-list"></i> <span data-translate="detected-diseases">Detected Diseases</span></h2>
+        
+        <!-- Language Tabs -->
+        <div class="language-tabs">
+            <button class="language-tab active" data-lang="en">English</button>
+            <button class="language-tab" data-lang="ta">தமிழ்</button>
+            <button class="language-tab" data-lang="hi">हिन्दी</button>
+            <button class="language-tab" data-lang="ml">മലയാളം</button>
+            <button class="language-tab" data-lang="te">తెలుగు</button>
+            <button class="language-tab" data-lang="kn">ಕನ್ನಡ</button>
+            <button class="language-tab" data-lang="ur">اردو</button>
+        </div>
+        
         {% for item in multi_predictions %}
-            <!-- Language Tabs -->
-            <div class="language-tabs">
-                <button class="language-tab active" onclick="switchLanguage(this, 'english-{{ loop.index }}')">English</button>
-                <button class="language-tab" onclick="switchLanguage(this, 'tamil-{{ loop.index }}')">தமிழ்</button>
-            </div>
-            
-            <!-- English Content -->
-            <div id="english-{{ loop.index }}" class="language-content active">
-                <h3 style="color: var(--dark);">{{ item.label }}</h3>
-                {% if item.details.explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ item.details.explanation }}</p>{% endif %}
-                {% if item.details.water %}<p><strong><i class="fas fa-tint"></i> Water:</strong> {{ item.details.water }}</p>{% endif %}
-                {% if item.details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ item.details.fertilizer }}</p>{% endif %}
-                {% if item.details.medicine %}
-                    <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
-                    <ul>{% for med in item.details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
-                {% endif %}
-                {% if item.details.organic_medicine %}
-                    <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
-                    <ul>{% for org in item.details.organic_medicine %}<li>{{ org }}</li>{% endfor %}}</ul>
-                {% endif %}
-                {% if item.details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ item.details.prevention }}</p>{% endif %}
-            </div>
-            
-            <!-- Tamil Content -->
-            <div id="tamil-{{ loop.index }}" class="language-content tamil-content">
-                <!-- Tamil Disease Name -->
-                <div class="tamil-disease-name">
-                    {% if item.details.tamil_details and item.details.tamil_details.பெயர் %}
-                        {{ item.details.tamil_details.பெயர் }}
-                    {% else %}
-                        {{ item.label }} - தமிழில்
-                    {% endif %}
+            <div class="disease-item">
+                <!-- Disease Name in Selected Language -->
+                <h3 class="disease-name language-content active" data-lang="en">{{ item.label }}</h3>
+                <h3 class="disease-name disease-name-tamil language-content tamil-content" data-lang="ta">{{ item.details.tamil.get('பெயர்', item.label) }}</h3>
+                <h3 class="disease-name disease-name-hindi language-content hindi-content" data-lang="hi">{{ item.details.hindi.get('नाम', item.label) }}</h3>
+                <h3 class="disease-name disease-name-malayalam language-content malayalam-content" data-lang="ml">{{ item.details.malayalam.get('പേര്', item.label) }}</h3>
+                <h3 class="disease-name disease-name-telugu language-content telugu-content" data-lang="te">{{ item.details.telugu.get('పేరు', item.label) }}</h3>
+                <h3 class="disease-name disease-name-kannada language-content kannada-content" data-lang="kn">{{ item.details.kannada.get('ಹೆಸರು', item.label) }}</h3>
+                <h3 class="disease-name disease-name-urdu language-content urdu-content" data-lang="ur">{{ item.details.urdu.get('نام', item.label) }}</h3>
+                
+                <!-- Disease Details in Selected Language -->
+                <div class="disease-details-multi">
+                    <!-- English Content -->
+                    <div class="language-content active" data-lang="en">
+                        {% if item.details.explanation %}<p><strong><i class="fas fa-stethoscope"></i> Explanation:</strong> {{ item.details.explanation }}</p>{% endif %}
+                        {% if item.details.water %}<p><strong><i class="fas fa-tint"></i> Water Requirements:</strong> {{ item.details.water }}</p>{% endif %}
+                        {% if item.details.fertilizer %}<p><strong><i class="fas fa-seedling"></i> Fertilizer:</strong> {{ item.details.fertilizer }}</p>{% endif %}
+                        {% if item.details.medicine %}
+                            <p><strong><i class="fas fa-pills"></i> Medicine:</strong></p>
+                            <ul>{% for med in item.details.medicine %}<li>{{ med }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.organic_medicine %}
+                            <p><strong><i class="fas fa-leaf"></i> Organic Medicine:</strong></p>
+                            <ul>{% for org in item.details.organic_medicine %}<li>{{ org }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.prevention %}<p><strong><i class="fas fa-shield-alt"></i> Prevention:</strong> {{ item.details.prevention }}</p>{% endif %}
+                    </div>
+                    
+                    <!-- Tamil Content -->
+                    <div class="language-content tamil-content" data-lang="ta">
+                        <p><strong><i class="fas fa-stethoscope"></i> வகை:</strong> {{ item.details.tamil.get('வகை', 'N/A') }}</p>
+                        {% if item.details.tamil.get('நீர்') %}<p><strong><i class="fas fa-tint"></i> நீர் தேவை:</strong> {{ item.details.tamil.get('நீர்', 'N/A') }}</p>{% endif %}
+                        {% if item.details.tamil.get('உரம்') %}<p><strong><i class="fas fa-seedling"></i> உரம்:</strong> {{ item.details.tamil.get('உரம்', 'N/A') }}</p>{% endif %}
+                        {% if item.details.tamil.get('மருந்து') %}
+                            <p><strong><i class="fas fa-pills"></i> மருந்து:</strong></p>
+                            <ul>{% for med in item.details.tamil.get('மருந்து', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.tamil.get('கரிம மருந்து') %}
+                            <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
+                            <ul>{% for org in item.details.tamil.get('கரிம மருந்து', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.tamil.get('தடுப்பு முறைகள்') %}<p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ item.details.tamil.get('தடுப்பு முறைகள்', 'N/A') }}</p>{% endif %}
+                    </div>
+                    
+                    <!-- Hindi Content -->
+                    <div class="language-content hindi-content" data-lang="hi">
+                        <p><strong><i class="fas fa-stethoscope"></i> प्रकार:</strong> {{ item.details.hindi.get('प्रकार', 'N/A') }}</p>
+                        {% if item.details.hindi.get('पानी') %}<p><strong><i class="fas fa-tint"></i> पानी की आवश्यकता:</strong> {{ item.details.hindi.get('पानी', 'N/A') }}</p>{% endif %}
+                        {% if item.details.hindi.get('उर्वरक') %}<p><strong><i class="fas fa-seedling"></i> उर्वरक:</strong> {{ item.details.hindi.get('उर्वरक', 'N/A') }}</p>{% endif %}
+                        {% if item.details.hindi.get('दवा') %}
+                            <p><strong><i class="fas fa-pills"></i> दवा:</strong></p>
+                            <ul>{% for med in item.details.hindi.get('दवा', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.hindi.get('जैविक दवा') %}
+                            <p><strong><i class="fas fa-leaf"></i> जैविक दवा:</strong></p>
+                            <ul>{% for org in item.details.hindi.get('जैविक दवा', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.hindi.get('रोकथाम') %}<p><strong><i class="fas fa-shield-alt"></i> रोकथाम:</strong> {{ item.details.hindi.get('रोकथाम', 'N/A') }}</p>{% endif %}
+                    </div>
+                    
+                    <!-- Malayalam Content -->
+                    <div class="language-content malayalam-content" data-lang="ml">
+                        <p><strong><i class="fas fa-stethoscope"></i> തരം:</strong> {{ item.details.malayalam.get('തരം', 'N/A') }}</p>
+                        {% if item.details.malayalam.get('വെള്ളം') %}<p><strong><i class="fas fa-tint"></i> വെള്ളം ആവശ്യം:</strong> {{ item.details.malayalam.get('വെള്ളം', 'N/A') }}</p>{% endif %}
+                        {% if item.details.malayalam.get('വളം') %}<p><strong><i class="fas fa-seedling"></i> വളം:</strong> {{ item.details.malayalam.get('വളം', 'N/A') }}</p>{% endif %}
+                        {% if item.details.malayalam.get('മരുന്ന്') %}
+                            <p><strong><i class="fas fa-pills"></i> മരുന്ന്:</strong></p>
+                            <ul>{% for med in item.details.malayalam.get('മരുന്ന്', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.malayalam.get('ജൈവ മരുന്ന്') %}
+                            <p><strong><i class="fas fa-leaf"></i> ജൈവ മരുന്ന്:</strong></p>
+                            <ul>{% for org in item.details.malayalam.get('ജൈവ മരുന്ന്', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.malayalam.get('തടയൽ') %}<p><strong><i class="fas fa-shield-alt"></i> തടയൽ:</strong> {{ item.details.malayalam.get('തടയൽ', 'N/A') }}</p>{% endif %}
+                    </div>
+                    
+                    <!-- Telugu Content -->
+                    <div class="language-content telugu-content" data-lang="te">
+                        <p><strong><i class="fas fa-stethoscope"></i> రకం:</strong> {{ item.details.telugu.get('రకం', 'N/A') }}</p>
+                        {% if item.details.telugu.get('నీరు') %}<p><strong><i class="fas fa-tint"></i> నీటి అవసరాలు:</strong> {{ item.details.telugu.get('నీరు', 'N/A') }}</p>{% endif %}
+                        {% if item.details.telugu.get('ఎరువు') %}<p><strong><i class="fas fa-seedling"></i> ఎరువు:</strong> {{ item.details.telugu.get('ఎరువు', 'N/A') }}</p>{% endif %}
+                        {% if item.details.telugu.get('మందు') %}
+                            <p><strong><i class="fas fa-pills"></i> మందు:</strong></p>
+                            <ul>{% for med in item.details.telugu.get('మందు', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.telugu.get('సేంద్రియ మందు') %}
+                            <p><strong><i class="fas fa-leaf"></i> సేంద్రియ మందు:</strong></p>
+                            <ul>{% for org in item.details.telugu.get('సేంద్రియ మందు', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.telugu.get('నివారణ') %}<p><strong><i class="fas fa-shield-alt"></i> నివారణ:</strong> {{ item.details.telugu.get('నివారణ', 'N/A') }}</p>{% endif %}
+                    </div>
+                    
+                    <!-- Kannada Content -->
+                    <div class="language-content kannada-content" data-lang="kn">
+                        <p><strong><i class="fas fa-stethoscope"></i> ರೀತಿ:</strong> {{ item.details.kannada.get('ರೀತಿ', 'N/A') }}</p>
+                        {% if item.details.kannada.get('ನೀರು') %}<p><strong><i class="fas fa-tint"></i> ನೀರಿನ ಅಗತ್ಯ:</strong> {{ item.details.kannada.get('ನೀರು', 'N/A') }}</p>{% endif %}
+                        {% if item.details.kannada.get('ಎರುವು') %}<p><strong><i class="fas fa-seedling"></i> ಎರುವು:</strong> {{ item.details.kannada.get('ಎರುವು', 'N/A') }}</p>{% endif %}
+                        {% if item.details.kannada.get('ಮದ್ದು') %}
+                            <p><strong><i class="fas fa-pills"></i> ಮದ್ದು:</strong></p>
+                            <ul>{% for med in item.details.kannada.get('ಮದ್ದು', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.kannada.get('ಸಾವಯವ ಮದ್ದು') %}
+                            <p><strong><i class="fas fa-leaf"></i> ಸಾವಯವ ಮದ್ದು:</strong></p>
+                            <ul>{% for org in item.details.kannada.get('ಸಾವಯವ ಮದ್ದು', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.kannada.get('ತಡೆಗಟ್ಟುವಿಕೆ') %}<p><strong><i class="fas fa-shield-alt"></i> ತಡೆಗಟ್ಟುವಿಕೆ:</strong> {{ item.details.kannada.get('ತಡೆಗಟ್ಟುವಿಕೆ', 'N/A') }}</p>{% endif %}
+                    </div>
+                    
+                    <!-- Urdu Content -->
+                    <div class="language-content urdu-content" data-lang="ur">
+                        <p><strong><i class="fas fa-stethoscope"></i> قسم:</strong> {{ item.details.urdu.get('قسم', 'N/A') }}</p>
+                        {% if item.details.urdu.get('پانی') %}<p><strong><i class="fas fa-tint"></i> پانی کی ضرورت:</strong> {{ item.details.urdu.get('پانی', 'N/A') }}</p>{% endif %}
+                        {% if item.details.urdu.get('کھاد') %}<p><strong><i class="fas fa-seedling"></i> کھاد:</strong> {{ item.details.urdu.get('کھاد', 'N/A') }}</p>{% endif %}
+                        {% if item.details.urdu.get('دوا') %}
+                            <p><strong><i class="fas fa-pills"></i> دوا:</strong></p>
+                            <ul>{% for med in item.details.urdu.get('دوا', []) %}<li>{{ med }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.urdu.get('نامیاتی دوا') %}
+                            <p><strong><i class="fas fa-leaf"></i> نامیاتی دوا:</strong></p>
+                            <ul>{% for org in item.details.urdu.get('نامیاتی دوا', []) %}<li>{{ org }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        {% if item.details.urdu.get('روک تھام') %}<p><strong><i class="fas fa-shield-alt"></i> روک تھام:</strong> {{ item.details.urdu.get('روک تھام', 'N/A') }}</p>{% endif %}
+                    </div>
                 </div>
                 
-                {% if item.details.tamil_details and item.details.tamil_details.விளக்கம் %}<p><strong><i class="fas fa-stethoscope"></i> விளக்கம்:</strong> {{ item.details.tamil_details.விளக்கம் }}</p>{% endif %}
-                {% if item.details.tamil_details and item.details.tamil_details.நீர் %}<p><strong><i class="fas fa-tint"></i> நீர்:</strong> {{ item.details.tamil_details.நீர் }}</p>{% endif %}
-                {% if item.details.tamil_details and item.details.tamil_details.உரம் %}<p><strong><i class="fas fa-seedling"></i> உரம்:</strong> {{ item.details.tamil_details.உரம் }}</p>{% endif %}
-                {% if item.details.tamil_details and item.details.tamil_details.மருந்து %}
-                    <p><strong><i class="fas fa-pills"></i> மருந்து:</strong></p>
-                    <ul>{% for med in item.details.tamil_details.மருந்து %}<li>{{ med }}</li>{% endfor %}</ul>
+                {% if image_url %}
+                    <p><strong data-translate="uploaded-frame">Uploaded Video Frame</strong>:</p>
+                    <img src="{{ image_url }}" alt="Teak Video Frame" width="300">
                 {% endif %}
-                {% if item.details.tamil_details and item.details.tamil_details.கரிம_மருந்து %}
-                    <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
-                    <ul>{% for org in item.details.tamil_details.கரிம_மருந்து %}<li>{{ org }}</li>{% endfor %}</ul>
-                {% elif item.details.tamil_details and item.details.tamil_details['கரிம மருந்து'] %}
-                    <p><strong><i class="fas fa-leaf"></i> கரிம மருந்து:</strong></p>
-                    <ul>{% for org in item.details.tamil_details['கரிம மருந்து'] %}<li>{{ org }}</li>{% endfor %}</ul>
-                {% endif %}
-                {% if item.details.tamil_details and item.details.tamil_details.தடுப்பு_முறைகள் %}
-                    <p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ item.details.tamil_details.தடுப்பு_முறைகள் }}</p>
-                {% elif item.details.tamil_details and item.details.tamil_details['தடுப்பு முறைகள்'] %}
-                    <p><strong><i class="fas fa-shield-alt"></i> தடுப்பு முறைகள்:</strong> {{ item.details.tamil_details['தடுப்பு முறைகள்'] }}</p>
-                {% endif %}
+                <hr>
             </div>
-            
-            {% if image_url %}
-                <p><strong>Uploaded Video Frame:</strong></p>
-                <img src="{{ image_url }}" alt="Video Frame" width="300">
-            {% endif %}
-            <hr>
         {% endfor %}
     </div>
     {% endif %}
@@ -715,73 +1283,321 @@
 
 <footer>
   <div class="container">
-    <p>© 2025 Teak Disease Detection | Built with <i class="fas fa-heart"></i> for Farmers</p>
-    <p style="font-weight: bold; color: var(--secondary);">Powered by TDA TECHNOLOGY</p>
+    <p>© 2025 <span data-translate="app-name">Teak Disease Detection</span> | <span data-translate="built-for">Built with</span> <i class="fas fa-heart"></i> <span data-translate="for-farmers">for Foresters & Farmers</span></p>
+    <p style="font-weight: bold; color: var(--secondary);" data-translate="powered-by">Powered by TDA TECHNOLOGY</p>
   </div>
 </footer>
 
 <!-- Floating Contact Button -->
 <button class="contact-btn" onclick="toggleContactForm()">
-  <i class="fas fa-envelope"></i> Contact
+  <i class="fas fa-envelope"></i> <span data-translate="contact">Contact</span>
 </button>
 
 <!-- Contact Form Popup -->
 <div class="contact-popup" id="contactForm">
-    <h3>Contact Us</h3>
+    <h3 data-translate="contact-us">Contact Us</h3>
     <form action="/send_email" method="POST" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
         <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
         <input type="file" name="photo" accept="image/*" title="Attach photo (optional)">
-        <button type="submit"><i class="fas fa-paper-plane"></i> Send Message</button>
+        <button type="submit"><i class="fas fa-paper-plane"></i> <span data-translate="send-message">Send Message</span></button>
     </form>
 </div>
 
 <script>
-  // Simple animation on scroll
+  // Language data
+  const translations = {
+    en: {
+      "app-name": "Teak Disease Detection",
+      "hero-title": "Teak Tree Disease Detection",
+      "hero-subtitle": "Upload your teak leaf image or video to detect diseases instantly with AI-powered analysis",
+      "upload-image-title": "Upload Leaf Image",
+      "upload-image-desc": "Upload a clear image of a teak leaf for disease detection",
+      "upload-video-title": "Upload Leaf Video",
+      "upload-video-desc": "Upload a video of teak leaves for comprehensive analysis",
+      "diagnose-image": "Diagnose Image",
+      "diagnose-video": "Diagnose Video",
+      "predicted-disease": "Predicted Disease",
+      "detected-diseases": "Detected Diseases",
+      "explanation": "Explanation",
+      "water": "Water",
+      "fertilizer": "Fertilizer",
+      "medicine": "Medicine",
+      "organic-medicine": "Organic Medicine",
+      "prevention": "Prevention",
+      "uploaded-image": "Uploaded Image",
+      "uploaded-frame": "Uploaded Video Frame",
+      "contact": "Contact",
+      "contact-us": "Contact Us",
+      "send-message": "Send Message",
+      "built-for": "Built with",
+      "for-farmers": "for Foresters & Farmers",
+      "powered-by": "Powered by TDA TECHNOLOGY",
+      "chatbot-tooltip": "Need more help? Ask me anything!",
+      "chatbot-speech": "You want more information? Feel free to ask me! 😊"
+    },
+    ta: {
+      "app-name": "தேக்கு மர நோய் கண்டறிதல்",
+      "hero-title": "தேக்கு மர நோய் கண்டறிதல்",
+      "hero-subtitle": "உங்கள் தேக்கு இலை படம் அல்லது வீடியோவை பதிவேற்றி AI-இன் மூலம் உடனடியாக நோய்களை கண்டறியவும்",
+      "upload-image-title": "இலை படத்தை பதிவேற்று",
+      "upload-image-desc": "நோயை கண்டறிய தேக்கு இலையின் தெளிவான படத்தை பதிவேற்றவும்",
+      "upload-video-title": "இலை வீடியோவை பதிவேற்று",
+      "upload-video-desc": "விரிவான பகுப்பாய்விற்கு தேக்கு இலைகளின் வீடியோவை பதிவேற்றவும்",
+      "diagnose-image": "படத்தை கண்டறியவும்",
+      "diagnose-video": "வீடியோவை கண்டறியவும்",
+      "predicted-disease": "கண்டறியப்பட்ட நோய்",
+      "detected-diseases": "கண்டறியப்பட்ட நோய்கள்",
+      "explanation": "விளக்கம்",
+      "water": "நீர்",
+      "fertilizer": "உரம்",
+      "medicine": "மருந்து",
+      "organic-medicine": "கரிம மருந்து",
+      "prevention": "தடுப்பு முறைகள்",
+      "uploaded-image": "பதிவேற்றப்பட்ட படம்",
+      "uploaded-frame": "பதிவேற்றப்பட்ட வீடியோ சட்டகம்",
+      "contact": "தொடர்பு கொள்ள",
+      "contact-us": "எங்களை தொடர்பு கொள்ள",
+      "send-message": "செய்தியை அனுப்பு",
+      "built-for": "கட்டப்பட்டது",
+      "for-farmers": "வனத்துறை மற்றும் விவசாயிகளுக்காக",
+      "powered-by": "TDA TECHNOLOGY ஆல் இயக்கப்படுகிறது",
+      "chatbot-tooltip": "மேலும் உதவி தேவையா? எதையும் கேளுங்கள்!",
+      "chatbot-speech": "மேலும் தகவல் வேண்டுமா? என்னிடம் கேட்க தயங்காதீர்கள்! 😊"
+    },
+    hi: {
+      "app-name": "सागौन रोग पहचान",
+      "hero-title": "सागौन के पेड़ की बीमारी की पहचान",
+      "hero-subtitle": "अपनी सागौन की पत्ती की छवि या वीडियो अपलोड करें और AI-संचालित विश्लेषण के साथ तुरंत बीमारियों का पता लगाएं",
+      "upload-image-title": "पत्ती छवि अपलोड करें",
+      "upload-image-desc": "रोग पहचान के लिए सागौन के पत्ते की स्पष्ट छवि अपलोड करें",
+      "upload-video-title": "पत्ती वीडियो अपलोड करें",
+      "upload-video-desc": "व्यापक विश्लेषण के लिए सागौन के पत्तों का वीडियो अपलोड करें",
+      "diagnose-image": "छवि का निदान करें",
+      "diagnose-video": "वीडियो का निदान करें",
+      "predicted-disease": "पूर्वानुमानित रोग",
+      "detected-diseases": "पाए गए रोग",
+      "explanation": "व्याख्या",
+      "water": "पानी",
+      "fertilizer": "खाद",
+      "medicine": "दवा",
+      "organic-medicine": "जैविक दवा",
+      "prevention": "रोकथाम",
+      "uploaded-image": "अपलोड की गई छवि",
+      "uploaded-frame": "अपलोड किया गया वीडियो फ्रेम",
+      "contact": "संपर्क करें",
+      "contact-us": "हमसे संपर्क करें",
+      "send-message": "संदेश भेजें",
+      "built-for": "के साथ बनाया गया",
+      "for-farmers": "वन विभाग और किसानों के लिए",
+      "powered-by": "TDA TECHNOLOGY द्वारा संचालित",
+      "chatbot-tooltip": "और मदद चाहिए? मुझसे कुछ भी पूछें!",
+      "chatbot-speech": "आप और जानकारी चाहते हैं? मुझसे पूछने में संकोच न करें! 😊"
+    },
+    ml: {
+      "app-name": "തേക്ക് മരം രോഗ ഡിറ്റക്ഷൻ",
+      "hero-title": "തേക്ക് മരം രോഗ ഡിറ്റക്ഷൻ",
+      "upload-image-title": "ഇല ഇമേജ് അപ്ലോഡ് ചെയ്യുക",
+      "diagnose-image": "ഇമേജ് രോഗനിർണ്ണയം",
+      "contact": "കോൺടാക്റ്റ്",
+      "chatbot-tooltip": "കൂടുതൽ സഹായം വേണോ? എന്തും ചോദിക്കുക!",
+      "chatbot-speech": "കൂടുതൽ വിവരങ്ങൾ വേണമോ? എന്നോട് ചോദിക്കാൻ മടിക്കേണ്ട! 😊"
+    },
+    te: {
+      "app-name": "టీక్ చెట్టు రోగ డిటెక్షన్",
+      "hero-title": "టీక్ చెట్టు రోగ డిటెక్షన్",
+      "upload-image-title": "ఆకు చిత్రాన్ని అప్లోడ్ చేయండి",
+      "diagnose-image": "చిత్రాన్ని రోగనిర్ధారణ చేయండి",
+      "contact": "సంప్రదించండి",
+      "chatbot-tooltip": "మరింత సహాయం కావాలా? నన్ను ఏదైనా అడగండి!",
+      "chatbot-speech": "మీకు మరింత సమాచారం కావాలా? నన్ను అడగడానికి సంకోచించకండి! 😊"
+    },
+    kn: {
+      "app-name": "ತೇಗಿನ ಮರದ ರೋಗ ಪತ್ತೆ",
+      "hero-title": "ತೇಗಿನ ಮರದ ರೋಗ ಪತ್ತೆ",
+      "upload-image-title": "ಎಲೆ ಚಿತ್ರವನ್ನು ಅಪ್ಲೋಡ್ ಮಾಡಿ",
+      "diagnose-image": "ಚಿತ್ರವನ್ನು ರೋಗನಿರ್ಣಯ ಮಾಡಿ",
+      "contact": "ಸಂಪರ್ಕಿಸಿ",
+      "chatbot-tooltip": "ಹೆಚ್ಚಿನ ಸಹಾಯ ಬೇಕೇ? ಏನಾದರೂ ಕೇಳಿ!",
+      "chatbot-speech": "ನಿಮಗೆ ಹೆಚ್ಚಿನ ಮಾಹಿತಿ ಬೇಕೇ? ಕೇಳಲು ಹಿಂಜರಿಯಬೇಡಿ! 😊"
+    },
+    ur: {
+      "app-name": "ساگون کی بیماری کی تشخیص",
+      "hero-title": "ساگون کے درخت کی بیماری کی تشخیص",
+      "upload-image-title": "پتے کی تصویر اپ لوڈ کریں",
+      "diagnose-image": "تصویر کی تشخیص کریں",
+      "contact": "رابطہ کریں",
+      "chatbot-tooltip": "مزید مدد چاہیے؟ مجھ سے کچھ بھی پوچھیں!",
+      "chatbot-speech": "آپ مزید معلومات چاہتے ہیں؟ مجھ سے پوچھنے میں ہچکچائیں نہیں! 😊"
+    }
+  };
+
+  // Current language (default to English)
+  let currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+  // DOM elements
+  const languageBtn = document.getElementById('languageBtn');
+  const languageDropdown = document.getElementById('languageDropdown');
+  const currentLanguageText = document.getElementById('currentLanguage');
+  const languageOptions = document.querySelectorAll('.language-option');
+  const languageTabs = document.querySelectorAll('.language-tab');
+
+  // Initialize language on page load
   document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.card');
+    // Set current language
+    updateLanguage(currentLanguage);
     
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
-        }
+    // Highlight current language in dropdown
+    languageOptions.forEach(option => {
+      if (option.dataset.lang === currentLanguage) {
+        option.classList.add('active');
+      } else {
+        option.classList.remove('active');
+      }
+    });
+    
+    // Set current language text
+    const langNames = {
+      'en': 'English',
+      'ta': 'தமிழ்',
+      'hi': 'हिन्दी',
+      'ml': 'മലയാളം',
+      'te': 'తెలుగు',
+      'kn': 'ಕನ್ನಡ',
+      'ur': 'اردو'
+    };
+    currentLanguageText.textContent = langNames[currentLanguage] || 'English';
+    
+    // Add click event to language tabs
+    languageTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const selectedLang = this.dataset.lang;
+        updateLanguage(selectedLang);
+        
+        // Update tab styles
+        languageTabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
       });
-    }, { threshold: 0.1 });
+    });
     
-    cards.forEach(card => {
-      card.style.animationPlayState = 'paused';
-      observer.observe(card);
+    // Chatbot avatar interaction
+    const chatbotAvatar = document.getElementById('chatbotAvatar');
+    let isChatbotDancing = false;
+    
+    // Make chatbot dance on click
+    chatbotAvatar.addEventListener('click', function(e) {
+      if (!e.target.closest('.chatbot-link')) {
+        // Only trigger if not clicking the link directly
+        const avatarImage = this.querySelector('.avatar-image');
+        if (!isChatbotDancing) {
+          isChatbotDancing = true;
+          avatarImage.style.animation = 'dance 0.5s 3 ease-in-out';
+          
+          // Reset animation after it completes
+          setTimeout(() => {
+            avatarImage.style.animation = 'dance 3s infinite ease-in-out';
+            isChatbotDancing = false;
+          }, 1500);
+        }
+      }
     });
   });
+
+  // Toggle language dropdown
+  languageBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    languageDropdown.classList.toggle('show');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function() {
+    languageDropdown.classList.remove('show');
+  });
+
+  // Language selection
+  languageOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      const selectedLang = this.dataset.lang;
+      updateLanguage(selectedLang);
+      
+      // Update UI
+      languageOptions.forEach(opt => opt.classList.remove('active'));
+      this.classList.add('active');
+      
+      const langNames = {
+        'en': 'English',
+        'ta': 'தமிழ்',
+        'hi': 'हिन्दी',
+        'ml': 'മലയാളം',
+        'te': 'తెలుగు',
+        'kn': 'ಕನ್ನಡ',
+        'ur': 'اردو'
+      };
+      currentLanguageText.textContent = langNames[selectedLang] || 'English';
+      
+      // Close dropdown
+      languageDropdown.classList.remove('show');
+      
+      // Save to localStorage
+      localStorage.setItem('selectedLanguage', selectedLang);
+    });
+  });
+
+  // Function to update language throughout the page
+  function updateLanguage(lang) {
+    currentLanguage = lang;
+    
+    // Update all translatable elements
+    document.querySelectorAll('[data-translate]').forEach(element => {
+      const key = element.getAttribute('data-translate');
+      if (translations[lang] && translations[lang][key]) {
+        element.textContent = translations[lang][key];
+      } else if (translations['en'] && translations['en'][key]) {
+        // Fallback to English
+        element.textContent = translations['en'][key];
+      }
+    });
+    
+    // Update disease content visibility
+    document.querySelectorAll('.language-content').forEach(content => {
+      if (content.dataset.lang === lang) {
+        content.style.display = 'block';
+        content.classList.add('active');
+      } else {
+        content.style.display = 'none';
+        content.classList.remove('active');
+      }
+    });
+    
+    // Update language tabs
+    languageTabs.forEach(tab => {
+      if (tab.dataset.lang === lang) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+  }
 
   // Contact form toggle
   function toggleContactForm() {
     var form = document.getElementById("contactForm");
     form.style.display = (form.style.display === "block") ? "none" : "block";
   }
-
-  // Language switching function
-  function switchLanguage(button, languageId) {
-    // Remove active class from all tabs
-    const tabs = button.parentElement.querySelectorAll('.language-tab');
-    tabs.forEach(tab => tab.classList.remove('active'));
-    
-    // Add active class to clicked tab
-    button.classList.add('active');
-    
-    // Hide all language contents
-    const contents = button.parentElement.parentElement.querySelectorAll('.language-content');
-    contents.forEach(content => content.classList.remove('active'));
-    
-    // Show selected language content
-    const selectedContent = document.getElementById(languageId);
-    if (selectedContent) {
-      selectedContent.classList.add('active');
+  
+  // Show chatbot speech bubble on page load after 3 seconds
+  setTimeout(() => {
+    const chatbotSpeech = document.querySelector('.chatbot-speech');
+    if (chatbotSpeech) {
+      chatbotSpeech.style.display = 'block';
+      
+      // Hide speech bubble after 8 seconds
+      setTimeout(() => {
+        chatbotSpeech.style.display = 'none';
+      }, 8000);
     }
-  }
+  }, 3000);
 </script>
 
 </body>
